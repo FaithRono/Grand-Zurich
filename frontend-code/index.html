@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="./image/logo.png" alt="Grand-Zurich-Hotel Logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#rooms">Rooms</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#authModal">Login</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-text">
+            <h1>Welcome to Our Hotel</h1>
+            <p>Experience Luxury & Comfort</p>
+            <button class="cta-btn">Book Now</button>
+        </div>
+    </section>
+
+    <!-- Rooms Listing Section -->
+    <section id="rooms" class="rooms-section">
+        <h2>Our Rooms</h2>
+        <div class="room-list">
+            <!-- Room Cards -->
+            <div class="room-card">
+                <img src="./image/room-1.png" alt="Room 1">
+                <h3>Deluxe Room</h3>
+                <p>Enjoy your stay with a beautiful view and luxurious amenities.</p>
+                <button class="book-btn">Book Now</button>
+            </div>
+            <div class="room-card">
+                <img src="./image/room-2.png" alt="Room 2">
+                <h3>Executive Suite</h3>
+                <p>Perfect for business trips with ample space and facilities.</p>
+                <button class="book-btn">Book Now</button>
+            </div>
+            <div class="room-card">
+                <img src="./image/room-3.png" alt="Room 3">
+                <h3>Executive Suite</h3>
+                <p>Perfect for business trips with ample space and facilities.</p>
+                <button class="book-btn">Book Now</button>
+            </div>
+            <div class="room-card">
+                <img src="./image/room-4.png" alt="Room 4">
+                <h3>Executive Suite</h3>
+                <p>Perfect for business trips with ample space and facilities.</p>
+                <button class="book-btn">Book Now</button>
+            </div>
+            <div class="room-card">
+                <img src="./image/room-5.png" alt="Room 5">
+                <h3>Executive Suite</h3>
+                <p>Perfect for business trips with ample space and facilities.</p>
+                <button class="book-btn">Book Now</button>
+            </div>
+            <div class="room-card">
+                <img src="./image/room-6.png" alt="Room 6">
+                <h3>Executive Suite</h3>
+                <p>Perfect for business trips with ample space and facilities.</p>
+                <button class="book-btn">Book Now</button>
+            </div>
+            <div class="room-card">
+                <img src="assets/images/room2.jpg" alt="Room 7">
+                <h3>Executive Suite</h3>
+                <p>Perfect for business trips with ample space and facilities.</p>
+                <button class="book-btn">Book Now</button>
+            </div>
+            <!-- More room cards can be added -->
+        </div>
+        
+
+    <!-- Room Details Modal -->
+<div id="roomDetailsModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Room Details</h2>
+        <div id="roomDetails">
+            <!-- Dynamic Room Details will be inserted here -->
+        </div>
+        <!-- Payment Section -->
+        <div class="payment-section">
+            <h3>Payment Information</h3>
+            <form id="paymentForm">
+                <!-- Credit Card Option -->
+                <div class="payment-option">
+                    <input type="radio" id="creditCard" name="paymentMethod" value="Credit Card" checked>
+                    <label for="creditCard">
+                        <i class="fas fa-credit-card"></i> Credit Card
+                    </label>
+                </div>
+                <div class="payment-details" id="creditCardDetails">
+                    <label for="cardNumber">Card Number:</label>
+                    <input type="text" id="cardNumber" name="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+                    
+                    <label for="cardExpiry">Expiry Date:</label>
+                    <input type="text" id="cardExpiry" name="cardExpiry" placeholder="MM/YY" required>
+                    
+                    <label for="cardCVV">CVV:</label>
+                    <input type="text" id="cardCVV" name="cardCVV" placeholder="XXX" required>
+                </div>
+
+                <!-- PayPal Option -->
+                <div class="payment-option">
+                    <input type="radio" id="paypal" name="paymentMethod" value="PayPal">
+                    <label for="paypal">
+                        <i class="fab fa-paypal"></i> PayPal
+                    </label>
+                </div>
+                
+                <!-- Mobile Payment Option -->
+                <div class="payment-option">
+                    <input type="radio" id="mobilePayment" name="paymentMethod" value="Mobile Payment">
+                    <label for="mobilePayment">
+                        <i class="fas fa-mobile-alt"></i> Mobile Payment (e.g., M-Pesa)
+                    </label>
+                </div>
+                
+                <button type="submit" class="pay-btn">Proceed to Payment</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+    
+        // Get selected payment method
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    
+        // Validate form inputs
+        if (paymentMethod === 'Credit Card') {
+            const cardNumber = document.getElementById('cardNumber').value;
+            const cardExpiry = document.getElementById('cardExpiry').value;
+            const cardCVV = document.getElementById('cardCVV').value;
+    
+            if (!cardNumber || !cardExpiry || !cardCVV) {
+                alert('Please fill in all Credit Card fields.');
+                return;
+            }
+        }
+    
+        // Collect form data
+        const formData = new FormData(this);
+    
+        // Example: Sending data to your backend
+        fetch('/api/process-payment', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Payment successful!');
+                // Optionally, close the modal or redirect
+                document.getElementById('roomDetailsModal').style.display = 'none';
+            } else {
+                alert('Payment failed. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+    
+    // Close modal when clicking the close button
+    document.querySelector('.close').addEventListener('click', function() {
+        document.getElementById('roomDetailsModal').style.display = 'none';
+    });
+    </script>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <h2>Our Services</h2>
+        <div class="services__container">
+            <div class="service__card">
+                <img src="images/room-service.jpg" alt="Room Service">
+                <h3>Room Service</h3>
+                <p>24/7 room service to cater to your culinary needs with a wide range of dishes and beverages.</p>
+            </div>
+            <div class="service__card">
+                <img src="images/housekeeping.jpg" alt="Housekeeping">
+                <h3>Housekeeping</h3>
+                <p>Daily housekeeping services to keep your room clean and comfortable throughout your stay.</p>
+            </div>
+            <div class="service__card">
+                <img src="images/wifi.jpg" alt="Free Wi-Fi">
+                <h3>Free Wi-Fi</h3>
+                <p>Complimentary high-speed internet access in all rooms and public areas of the hotel.</p>
+            </div>
+            <div class="service__card">
+                <img src="images/airport-shuttle.jpg" alt="Airport Shuttle">
+                <h3>Airport Shuttle</h3>
+                <p>Convenient airport pickup and drop-off services for a hassle-free travel experience.</p>
+            </div>
+            <div class="service__card">
+                <img src="images/swimming-pool.jpg" alt="Swimming Pool">
+                <h3>Swimming Pool</h3>
+                <p>Access to our luxurious swimming pool, perfect for relaxation and leisure.</p>
+            </div>
+            <div class="service__card">
+                <img src="images/spa.jpg" alt="Spa & Wellness">
+                <h3>Spa & Wellness</h3>
+                <p>Indulge in our spa services with massages, facials, and wellness treatments for relaxation.</p>
+            </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <h2></h2>
+        <div class="contact__container">
+            <form id="contactForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required />
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required />
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+
+                <button type="submit">Send</button>
+            </form>
+            <div class="contact__info">
+                <h3>Contact Information:</h3>
+                <ul>
+                    <li>Email: faithrono132@gmail.com</li>
+                    <li>Phone: +254 704728807</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
